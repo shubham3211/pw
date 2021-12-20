@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button onclick="subscribe()">Shubscribe</button>
+    <script>
+      addEventListener("load", () => {
+        if ("serviceWorker" in navigator) {
+          navigator.serviceWorker
+            .register("/sw.js")
+            .then((reg) => console.log("service worker registered", reg));
+        }
+      });
+
+      async function subscribe() {
+        const sw = await navigator.serviceWorker.ready;
+        const push = sw.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey:
+            "BF8fJvIT5SRVZXqr-O5ktOkuvw3TGFlTOPLYYaQTVF_dhbO56b1q5F7JSRjOZ9wr7dCTRCl-3rrN7WffirG9-mI",
+        });
+        console.log(JSON.stringify(push));
+      }
+    </script>
+  </body>
+</html>
